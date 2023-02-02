@@ -25,6 +25,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import com.juvcarl.goalsapp.data.GoalRepository
+import com.juvcarl.goalsapp.data.local.database.Goal
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -48,12 +49,20 @@ class GoalViewModelTest {
 
 private class FakeGoalRepository : GoalRepository {
 
-    private val data = mutableListOf<String>()
+    private val data = mutableListOf<Goal>()
 
-    override val goals: Flow<List<String>>
+    override val goals: Flow<List<Goal>>
         get() = flow { emit(data.toList()) }
 
-    override suspend fun add(name: String) {
-        data.add(0, name)
+    override suspend fun upsert(goal: Goal) {
+        if(data.contains(goal)){
+            data.remove(goal)
+        }
+        data.add(goal)
     }
+
+    override suspend fun delete(goal: Goal) {
+        data.remove(goal)
+    }
+
 }

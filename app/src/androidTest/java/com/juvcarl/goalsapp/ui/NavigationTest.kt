@@ -22,7 +22,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Rule
 import org.junit.Test
-import com.juvcarl.goalsapp.data.di.fakeGoals
+import com.juvcarl.goalsapp.data.local.repository.fakes.fakeGoals
 
 @HiltAndroidTest
 class NavigationTest {
@@ -36,7 +36,7 @@ class NavigationTest {
     @Test
     fun test1() {
         // TODO: Add navigation tests
-        composeTestRule.onNodeWithText(fakeGoals.first(), substring = true).assertExists()
+        composeTestRule.onNodeWithText(fakeGoals.first().name, substring = true).assertExists()
     }
 }
 

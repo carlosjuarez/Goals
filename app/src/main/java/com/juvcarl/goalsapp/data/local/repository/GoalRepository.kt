@@ -17,25 +17,28 @@
 package com.juvcarl.goalsapp.data
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import com.juvcarl.goalsapp.data.local.database.Goal
 import com.juvcarl.goalsapp.data.local.database.GoalDao
 import javax.inject.Inject
 
 interface GoalRepository {
-    val goals: Flow<List<String>>
 
-    suspend fun add(name: String)
+    val goals: Flow<List<Goal>>
+
+    suspend fun upsert(goal: Goal)
+    suspend fun delete(goal: Goal)
 }
 
-class DefaultGoalRepository @Inject constructor(
+class GoalRepositoryImpl @Inject constructor(
     private val goalDao: GoalDao
 ) : GoalRepository {
 
-    override val goals: Flow<List<String>> =
-        goalDao.getGoals().map { items -> items.map { it.name } }
+    override val goals: Flow<List<Goal>> = goalDao.getGoals()
+    override suspend fun upsert(goal: Goal) {
+        goalDao.upsertGoal(goal)
+    }
 
-    override suspend fun add(name: String) {
-        goalDao.insertGoal(Goal(name = name))
+    override suspend fun delete(goal: Goal){
+        goalDao.deleteGoal(goal)
     }
 }

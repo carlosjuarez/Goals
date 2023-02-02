@@ -27,16 +27,16 @@ import com.juvcarl.goalsapp.data.local.database.Goal
 import com.juvcarl.goalsapp.data.local.database.GoalDao
 
 /**
- * Unit tests for [DefaultGoalRepository].
+ * Unit tests for [GoalRepositoryImpl].
  */
 @OptIn(ExperimentalCoroutinesApi::class) // TODO: Remove when stable
-class DefaultGoalRepositoryTest {
+class GoalRepositoryImplTest {
 
     @Test
     fun goals_newItemSaved_itemIsReturned() = runTest {
-        val repository = DefaultGoalRepository(FakeGoalDao())
+        val repository = GoalRepositoryImpl(FakeGoalDao())
 
-        repository.add("Repository")
+        repository.upsert(Goal(5,"Repository",0f ))
 
         assertEquals(repository.goals.first().size, 1)
     }
@@ -51,7 +51,15 @@ private class FakeGoalDao : GoalDao {
         emit(data)
     }
 
-    override suspend fun insertGoal(item: Goal) {
-        data.add(0, item)
+    override suspend fun deleteGoal(item: Goal) {
+        data.remove(item)
     }
+
+    override suspend fun upsertGoal(item: Goal) {
+        if(data.contains(item)){
+            data.remove(item)
+        }
+        data.add(item)
+    }
+
 }

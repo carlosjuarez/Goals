@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import com.juvcarl.goalsapp.data.GoalRepository
+import com.juvcarl.goalsapp.data.local.database.Goal
 import com.juvcarl.goalsapp.ui.goal.GoalUiState.Error
 import com.juvcarl.goalsapp.ui.goal.GoalUiState.Loading
 import com.juvcarl.goalsapp.ui.goal.GoalUiState.Success
@@ -41,9 +42,15 @@ class GoalViewModel @Inject constructor(
         .catch { Error(it) }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), Loading)
 
-    fun addGoal(name: String) {
+    fun addGoal(goal: Goal) {
         viewModelScope.launch {
-            goalRepository.add(name)
+            goalRepository.upsert(goal)
+        }
+    }
+
+    fun removeGoal(goal: Goal){
+        viewModelScope.launch {
+            goalRepository.delete(goal)
         }
     }
 }
@@ -51,5 +58,5 @@ class GoalViewModel @Inject constructor(
 sealed interface GoalUiState {
     object Loading : GoalUiState
     data class Error(val throwable: Throwable) : GoalUiState
-    data class Success(val data: List<String>) : GoalUiState
+    data class Success(val data: List<Goal>) : GoalUiState
 }
