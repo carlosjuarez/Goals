@@ -22,15 +22,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.produceState
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,40 +31,43 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle.State.STARTED
 import androidx.lifecycle.repeatOnLifecycle
 import com.juvcarl.goalsapp.ui.theme.MyApplicationTheme
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.runtime.*
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.juvcarl.goalsapp.data.local.database.Goal
+import com.juvcarl.goalsapp.data.local.repository.fakes.fakeGoals
 
+@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun GoalScreen(modifier: Modifier = Modifier, viewModel: GoalViewModel = hiltViewModel()) {
-    val lifecycle = LocalLifecycleOwner.current.lifecycle
-    val items by produceState<GoalUiState>(
-        initialValue = GoalUiState.Loading,
-        key1 = lifecycle,
-        key2 = viewModel
-    ) {
-        lifecycle.repeatOnLifecycle(state = STARTED) {
-            viewModel.uiState.collect { value = it }
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+
+    when(state){
+        is GoalUiState.Success ->{
+            GoalScreen(
+                items = (state as GoalUiState.Success).data,
+                onSave = viewModel::addGoal,
+                modifier = modifier
+            )
         }
-    }
-    if (items is GoalUiState.Success) {
-        GoalScreen(
-            items = (items as GoalUiState.Success).data,
-            onSave = viewModel::addGoal,
-            modifier = modifier
-        )
+        is GoalUiState.Error -> CircularProgressIndicator()
+        GoalUiState.Loading -> CircularProgressIndicator()
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun GoalScreen(
-    items: List<String>,
-    onSave: (name: String) -> Unit,
+    items: List<Goal>,
+    onSave: (name: Goal) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier) {
-        var nameGoal by remember { mutableStateOf("Compose") }
+    Column(modifier.fillMaxWidth()) {
+        var nameGoal by remember { mutableStateOf("Goal") }
         Row(
-            modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 24.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             TextField(
@@ -80,12 +75,15 @@ internal fun GoalScreen(
                 onValueChange = { nameGoal = it }
             )
 
-            Button(modifier = Modifier.width(96.dp), onClick = { onSave(nameGoal) }) {
+            Button(modifier = Modifier.width(96.dp), onClick = {
+                val goal = Goal(name = nameGoal, progress = 0f)
+                onSave(goal)
+            }) {
                 Text("Save")
             }
         }
         items.forEach {
-            Text("Saved item: $it")
+            Text("Saved item: ${it.name} : ${it.progress}")
         }
     }
 }
@@ -96,7 +94,7 @@ internal fun GoalScreen(
 @Composable
 private fun DefaultPreview() {
     MyApplicationTheme {
-        GoalScreen(listOf("Compose", "Room", "Kotlin"), onSave = {})
+        GoalScreen(fakeGoals, onSave = {})
     }
 }
 
@@ -104,6 +102,6 @@ private fun DefaultPreview() {
 @Composable
 private fun PortraitPreview() {
     MyApplicationTheme {
-        GoalScreen(listOf("Compose", "Room", "Kotlin"), onSave = {})
+        GoalScreen(fakeGoals, onSave = {})
     }
 }

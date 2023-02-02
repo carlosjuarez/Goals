@@ -16,26 +16,25 @@
 
 package com.juvcarl.goalsapp.data.local.database
 
-import androidx.room.Dao
-import androidx.room.Entity
-import androidx.room.Insert
-import androidx.room.PrimaryKey
-import androidx.room.Query
+import androidx.room.*
 import kotlinx.coroutines.flow.Flow
+import java.util.*
 
 @Entity
 data class Goal(
-    val name: String
-) {
     @PrimaryKey(autoGenerate = true)
-    var uid: Int = 0
-}
+    val uid: Int = 0,
+    val name: String,
+    val progress: Float
+)
 
 @Dao
 interface GoalDao {
-    @Query("SELECT * FROM goal ORDER BY uid DESC LIMIT 10")
+    @Query("SELECT * FROM goal ORDER BY uid DESC")
     fun getGoals(): Flow<List<Goal>>
+    @Delete
+    suspend fun deleteGoal(item: Goal)
 
-    @Insert
-    suspend fun insertGoal(item: Goal)
+    @Upsert
+    suspend fun upsertGoal(item: Goal)
 }

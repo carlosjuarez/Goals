@@ -22,7 +22,7 @@ import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import com.juvcarl.goalsapp.data.GoalRepository
 import com.juvcarl.goalsapp.data.di.DataModule
-import com.juvcarl.goalsapp.data.di.FakeGoalRepository
+import com.juvcarl.goalsapp.data.local.repository.fakes.FakeGoalRepository
 
 @Module
 @TestInstallIn(

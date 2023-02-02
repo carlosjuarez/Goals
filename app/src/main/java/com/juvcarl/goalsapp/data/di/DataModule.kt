@@ -20,11 +20,9 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import com.juvcarl.goalsapp.data.GoalRepository
-import com.juvcarl.goalsapp.data.DefaultGoalRepository
-import javax.inject.Inject
+import com.juvcarl.goalsapp.data.GoalRepositoryImpl
+import com.juvcarl.goalsapp.data.local.database.Goal
 import javax.inject.Singleton
 
 @Module
@@ -34,16 +32,7 @@ interface DataModule {
     @Singleton
     @Binds
     fun bindsGoalRepository(
-        goalRepository: DefaultGoalRepository
+        goalRepository: GoalRepositoryImpl
     ): GoalRepository
 }
 
-class FakeGoalRepository @Inject constructor() : GoalRepository {
-    override val goals: Flow<List<String>> = flowOf(fakeGoals)
-
-    override suspend fun add(name: String) {
-        throw NotImplementedError()
-    }
-}
-
-val fakeGoals = listOf("One", "Two", "Three")

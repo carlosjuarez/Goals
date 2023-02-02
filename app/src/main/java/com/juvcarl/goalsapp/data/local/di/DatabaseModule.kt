@@ -18,13 +18,12 @@ package com.juvcarl.goalsapp.data.local.di
 
 import android.content.Context
 import androidx.room.Room
+import com.juvcarl.goalsapp.data.local.database.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import com.juvcarl.goalsapp.data.local.database.AppDatabase
-import com.juvcarl.goalsapp.data.local.database.GoalDao
 import javax.inject.Singleton
 
 
@@ -37,12 +36,24 @@ class DatabaseModule {
     }
 
     @Provides
+    fun provideStepDao(appDatabase: AppDatabase): StepDao {
+        return appDatabase.stepDao()
+    }
+
+    @Provides
+    fun provideFrequencyDao(appDatabase: AppDatabase): FrequencyDao {
+        return appDatabase.frequencyDao()
+    }
+
+
+    @Provides
     @Singleton
     fun provideAppDatabase(@ApplicationContext appContext: Context): AppDatabase {
         return Room.databaseBuilder(
             appContext,
             AppDatabase::class.java,
             "Goal"
-        ).build()
+        ).addCallback(databaseCallback)
+            .build()
     }
 }
