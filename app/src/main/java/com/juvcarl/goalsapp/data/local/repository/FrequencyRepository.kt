@@ -25,7 +25,7 @@ import com.juvcarl.goalsapp.data.local.database.GoalDao
 import javax.inject.Inject
 
 interface FrequencyRepository {
-    val frequencies: Flow<List<Frequency>>
+    val frequencies: List<Frequency>
 
     suspend fun addFrequency(frequency: Frequency)
     suspend fun addFrequencies(frequencies: List<Frequency>)

@@ -24,5 +24,7 @@ class FakeGoalRepository @Inject constructor() : GoalRepository {
 
 val fakeGoals = mutableListOf(
     Goal(name = "one", progress = 0f),
-    Goal(name = "two", progress = 0f),
-    Goal(name = "three", progress = 0f))
+    Goal(name = "two", progress = 40f),
+    Goal(name = "three", progress = 100f),
+    Goal(name = "four", progress = 70f),
+    Goal(name = "five", progress = 20f))

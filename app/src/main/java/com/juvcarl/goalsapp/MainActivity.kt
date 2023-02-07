@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.juvcarl.goalsapp.ui
+package com.juvcarl.goalsapp
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -24,7 +24,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import dagger.hilt.android.AndroidEntryPoint
-import com.juvcarl.goalsapp.ui.theme.MyApplicationTheme
+import com.juvcarl.goalsapp.ui.theme.ApplicationTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyApplicationTheme {
+            ApplicationTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background

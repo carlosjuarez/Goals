@@ -26,6 +26,8 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import com.juvcarl.goalsapp.data.GoalRepository
 import com.juvcarl.goalsapp.data.local.database.Goal
+import com.juvcarl.goalsapp.feature.goal.GoalUiState
+import com.juvcarl.goalsapp.feature.goal.GoalViewModel
 
 /**
  * Example local unit test, which will execute on the development machine (host).

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.juvcarl.goalsapp.ui.goal
+package com.juvcarl.goalsapp.feature.goal
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -27,9 +27,9 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import com.juvcarl.goalsapp.data.GoalRepository
 import com.juvcarl.goalsapp.data.local.database.Goal
-import com.juvcarl.goalsapp.ui.goal.GoalUiState.Error
-import com.juvcarl.goalsapp.ui.goal.GoalUiState.Loading
-import com.juvcarl.goalsapp.ui.goal.GoalUiState.Success
+import com.juvcarl.goalsapp.feature.goal.GoalUiState.Error
+import com.juvcarl.goalsapp.feature.goal.GoalUiState.Loading
+import com.juvcarl.goalsapp.feature.goal.GoalUiState.Success
 import javax.inject.Inject
 
 @HiltViewModel
