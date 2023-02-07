@@ -16,7 +16,7 @@ data class Frequency(
 interface FrequencyDao {
 
     @Query("SELECT * FROM frequency ORDER BY name DESC")
-    fun getFrequencies(): Flow<List<Frequency>>
+    fun getFrequencies(): List<Frequency>
 
     @Insert
     fun insertFrequency(frequency: Frequency)

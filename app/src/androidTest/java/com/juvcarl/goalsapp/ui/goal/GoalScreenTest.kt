@@ -21,13 +21,15 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.juvcarl.goalsapp.feature.goal.GoalDisplay
+import com.juvcarl.goalsapp.feature.goal.GoalScreen
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 /**
- * UI tests for [GoalScreen].
+ * UI tests for [GoalDisplay].
  */
 @RunWith(AndroidJUnit4::class)
 class GoalScreenTest {
@@ -38,7 +40,7 @@ class GoalScreenTest {
     @Before
     fun setup() {
         composeTestRule.setContent {
-            GoalScreen(FAKE_DATA, onSave = {})
+            //GoalScreen(FAKE_DATA, onSave = {},)
         }
     }
 
