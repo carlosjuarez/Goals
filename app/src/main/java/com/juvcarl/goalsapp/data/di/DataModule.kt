@@ -16,13 +16,11 @@
 
 package com.juvcarl.goalsapp.data.di
 
+import com.juvcarl.goalsapp.data.local.repository.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import com.juvcarl.goalsapp.data.GoalRepository
-import com.juvcarl.goalsapp.data.GoalRepositoryImpl
-import com.juvcarl.goalsapp.data.local.database.Goal
 import javax.inject.Singleton
 
 @Module
@@ -34,5 +32,17 @@ interface DataModule {
     fun bindsGoalRepository(
         goalRepository: GoalRepositoryImpl
     ): GoalRepository
+
+    @Singleton
+    @Binds
+    fun bindsStepRepository(
+        stepRepository: StepRepositoryImpl
+    ): StepRepository
+
+    @Singleton
+    @Binds
+    fun bindsFrequencyRepository(
+        frequencyRepository: FrequencyRepositoryImpl
+    ): FrequencyRepository
 }
 

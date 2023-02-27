@@ -25,6 +25,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import com.juvcarl.goalsapp.data.local.database.Goal
 import com.juvcarl.goalsapp.data.local.database.GoalDao
+import com.juvcarl.goalsapp.data.local.repository.GoalRepositoryImpl
 
 /**
  * Unit tests for [GoalRepositoryImpl].

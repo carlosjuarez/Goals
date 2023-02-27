@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import com.juvcarl.goalsapp.data.GoalRepository
+import com.juvcarl.goalsapp.data.local.repository.GoalRepository
 import com.juvcarl.goalsapp.data.local.database.Goal
 import com.juvcarl.goalsapp.feature.goal.GoalUiState.Error
 import com.juvcarl.goalsapp.feature.goal.GoalUiState.Loading

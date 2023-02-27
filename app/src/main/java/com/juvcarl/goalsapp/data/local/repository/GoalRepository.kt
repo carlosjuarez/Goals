@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.juvcarl.goalsapp.data
+package com.juvcarl.goalsapp.data.local.repository
 
 import kotlinx.coroutines.flow.Flow
 import com.juvcarl.goalsapp.data.local.database.Goal

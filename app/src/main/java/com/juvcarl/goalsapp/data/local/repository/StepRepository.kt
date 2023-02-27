@@ -14,17 +14,15 @@
  * limitations under the License.
  */
 
-package com.juvcarl.goalsapp.data
+package com.juvcarl.goalsapp.data.local.repository
 
 import com.juvcarl.goalsapp.data.local.database.*
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 interface StepRepository {
-
-
     fun getStepsFromGoalStream(goalId: Int): Flow<List<Step>>
-    fun getStepsWithFrequencyStream(goalId: Int): List<StepWithFrequencies>
+    fun getStepsWithFrequencyStream(goalId: Int): Flow<List<StepWithFrequencies>>
 
     suspend fun upsertStep(step: Step)
     suspend fun deleteStep(step: Step)

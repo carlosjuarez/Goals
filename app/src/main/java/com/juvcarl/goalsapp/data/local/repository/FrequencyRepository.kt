@@ -14,18 +14,14 @@
  * limitations under the License.
  */
 
-package com.juvcarl.goalsapp.data
+package com.juvcarl.goalsapp.data.local.repository
 
 import com.juvcarl.goalsapp.data.local.database.Frequency
 import com.juvcarl.goalsapp.data.local.database.FrequencyDao
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import com.juvcarl.goalsapp.data.local.database.Goal
-import com.juvcarl.goalsapp.data.local.database.GoalDao
 import javax.inject.Inject
 
 interface FrequencyRepository {
-    val frequencies: List<Frequency>
+    suspend fun getFrequencies(): List<Frequency>
 
     suspend fun addFrequency(frequency: Frequency)
     suspend fun addFrequencies(frequencies: List<Frequency>)
@@ -35,7 +31,9 @@ class FrequencyRepositoryImpl @Inject constructor(
     private val frequencyDao: FrequencyDao
 ) : FrequencyRepository {
 
-    override val frequencies = frequencyDao.getFrequencies()
+    override suspend fun getFrequencies(): List<Frequency> {
+        return frequencyDao.getFrequencies()
+    }
 
     override suspend fun addFrequency(frequency: Frequency){
         frequencyDao.insertFrequency(frequency)

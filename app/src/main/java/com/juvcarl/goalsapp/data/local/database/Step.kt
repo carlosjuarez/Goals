@@ -79,6 +79,6 @@ interface StepDao {
 
     @Transaction
     @Query("SELECT * FROM step where goalId = :goalId ORDER BY uid DESC")
-    fun getStepsWithFrequencies(goalId: Int): List<StepWithFrequencies>
+    fun getStepsWithFrequencies(goalId: Int): Flow<List<StepWithFrequencies>>
 
 }

@@ -32,6 +32,7 @@ fun GoalIcon(icon: Icon, modifier: Modifier = Modifier, tint : Color = MaterialT
 
 object Icons{
     val Add = Icon.DrawableResourceIcon(R.drawable.ic_icon_add, R.string.add)
+    val Close = Icon.DrawableResourceIcon(R.drawable.ic_icon_close, R.string.close)
 }
 
 sealed class Icon {

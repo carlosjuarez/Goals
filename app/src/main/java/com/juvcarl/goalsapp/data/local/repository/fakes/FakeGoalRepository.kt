@@ -1,6 +1,6 @@
 package com.juvcarl.goalsapp.data.local.repository.fakes
 
-import com.juvcarl.goalsapp.data.GoalRepository
+import com.juvcarl.goalsapp.data.local.repository.GoalRepository
 import com.juvcarl.goalsapp.data.local.database.Goal
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf

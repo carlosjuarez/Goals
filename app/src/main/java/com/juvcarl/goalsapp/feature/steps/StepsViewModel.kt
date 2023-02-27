@@ -3,14 +3,17 @@ package com.juvcarl.goalsapp.feature.steps
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.juvcarl.goalsapp.data.FrequencyRepository
-import com.juvcarl.goalsapp.data.StepRepository
+import com.juvcarl.goalsapp.data.local.database.Frequency
+import com.juvcarl.goalsapp.data.local.repository.FrequencyRepository
+import com.juvcarl.goalsapp.data.local.repository.StepRepository
 import com.juvcarl.goalsapp.data.local.database.Step
 import com.juvcarl.goalsapp.feature.steps.StepsUIState.Success
 import com.juvcarl.goalsapp.feature.steps.StepsUIState.Loading
 import com.juvcarl.goalsapp.feature.steps.StepsUIState.Error
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,8 +31,7 @@ class StepsViewModel @Inject constructor(
         .catch { Error(it) }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000),Loading)
 
-    val frequencies = frequencyRepository.frequencies
-
+    lateinit var frequencies: List<Frequency>
     fun saveFrequency(){
 
     }

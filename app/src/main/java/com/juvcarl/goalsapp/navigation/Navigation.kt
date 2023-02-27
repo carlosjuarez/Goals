@@ -33,7 +33,7 @@ fun MainNavigation() {
         composable("main") {
             GoalDisplay(navigateToSteps = {navController.navigate("steps/$it") })
         }
-        composable("steps/{goalid}", arguments = listOf(navArgument("goalId") { type = NavType.IntType })){
+        composable("steps/{goalId}", arguments = listOf(navArgument("goalId") { type = NavType.IntType })){
             StepsDisplay()
         }
     }

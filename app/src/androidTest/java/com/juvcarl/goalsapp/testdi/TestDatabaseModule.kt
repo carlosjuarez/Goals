@@ -20,9 +20,13 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
-import com.juvcarl.goalsapp.data.GoalRepository
+import com.juvcarl.goalsapp.data.local.repository.GoalRepository
 import com.juvcarl.goalsapp.data.di.DataModule
+import com.juvcarl.goalsapp.data.local.repository.FrequencyRepository
+import com.juvcarl.goalsapp.data.local.repository.StepRepository
+import com.juvcarl.goalsapp.data.local.repository.fakes.FakeFrequencyRepository
 import com.juvcarl.goalsapp.data.local.repository.fakes.FakeGoalRepository
+import com.juvcarl.goalsapp.data.local.repository.fakes.FakeStepRepository
 
 @Module
 @TestInstallIn(
@@ -32,7 +36,17 @@ import com.juvcarl.goalsapp.data.local.repository.fakes.FakeGoalRepository
 interface FakeDataModule {
 
     @Binds
-    abstract fun bindRepository(
+    abstract fun bindGoalRepository(
         fakeRepository: FakeGoalRepository
     ): GoalRepository
+
+    @Binds
+    abstract fun bindFrequencyRepository(
+        fakeRepository: FakeFrequencyRepository
+    ): FrequencyRepository
+
+    @Binds
+    abstract fun bindStepRepository(
+        fakeRepository: FakeStepRepository
+    ): StepRepository
 }
